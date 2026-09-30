@@ -145,7 +145,7 @@ export class CameraService {
 
   async runMultiCameraSimulation(plate: string = "MP0AA8123") {
     await this.seedDemoCameras();
-    const { detectionService } = await import("./detection.service");
+    const { detectionService } = await import("./detection.service.js");
 
     const now = new Date();
     const timeline = [

@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mlService = exports.MLService = void 0;
 const config_1 = require("../config");
+const promises_1 = __importDefault(require("fs/promises"));
 class MLService {
     baseUrl;
     constructor() {
@@ -33,10 +37,12 @@ class MLService {
      */
     async processImage(imagePath) {
         try {
+            const formData = new FormData();
+            const image = await promises_1.default.readFile(imagePath);
+            formData.append("file", new Blob([image]), "image.jpg");
             const response = await fetch(`${this.baseUrl}/process/image`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ imagePath }),
+                body: formData,
                 signal: AbortSignal.timeout(15000),
             });
             if (!response.ok) {
@@ -65,10 +71,12 @@ class MLService {
     async processVideo(videoPath, frameSkip = 1) {
         try {
             const url = `${this.baseUrl}/process/video?frame_skip=${frameSkip}`;
+            const formData = new FormData();
+            const video = await promises_1.default.readFile(videoPath);
+            formData.append("file", new Blob([video]), videoPath.split(/[\\/]/).pop() || "video.mp4");
             const response = await fetch(url, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ videoPath }),
+                body: formData,
                 signal: AbortSignal.timeout(60000),
             });
             if (!response.ok) {

@@ -1,4 +1,5 @@
 import { config } from "../config";
+import fs from "fs/promises";
 
 export interface MLRawDetection {
   plate: string;
@@ -48,10 +49,13 @@ export class MLService {
    */
   async processImage(imagePath: string): Promise<MLDetectionResponse> {
     try {
+      const formData = new FormData();
+      const image = await fs.readFile(imagePath);
+      formData.append("file", new Blob([image]), "image.jpg");
+
       const response = await fetch(`${this.baseUrl}/process/image`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imagePath }),
+        body: formData,
         signal: AbortSignal.timeout(15000),
       });
 
@@ -82,10 +86,13 @@ export class MLService {
   async processVideo(videoPath: string, frameSkip: number = 1): Promise<MLDetectionResponse> {
     try {
       const url = `${this.baseUrl}/process/video?frame_skip=${frameSkip}`;
+      const formData = new FormData();
+      const video = await fs.readFile(videoPath);
+      formData.append("file", new Blob([video]), videoPath.split(/[\\/]/).pop() || "video.mp4");
+
       const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ videoPath }),
+        body: formData,
         signal: AbortSignal.timeout(60000),
       });
 
