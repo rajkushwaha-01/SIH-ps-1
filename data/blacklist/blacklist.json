@@ -1,0 +1,23 @@
+[
+  {
+    "plate": "MP0AA8123",
+    "reason": "Vehicle reported stolen (FIR #BPL-2026-8812)",
+    "category": "STOLEN_VEHICLE",
+    "severity": "CRITICAL",
+    "addedAt": "2026-09-15T08:00:00Z"
+  },
+  {
+    "plate": "MP04AB1234",
+    "reason": "Pending judicial impound order",
+    "category": "WARRANT",
+    "severity": "HIGH",
+    "addedAt": "2026-09-20T12:00:00Z"
+  },
+  {
+    "plate": "DL01XY9999",
+    "reason": "Hit and run inquiry suspect",
+    "category": "CRIMINAL_INVESTIGATION",
+    "severity": "CRITICAL",
+    "addedAt": "2026-09-22T14:30:00Z"
+  }
+]

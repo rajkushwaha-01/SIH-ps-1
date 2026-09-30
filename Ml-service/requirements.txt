@@ -1,0 +1,7 @@
+ultralytics>=8.0.0
+opencv-python>=4.8.0
+fast-plate-ocr>=1.1.0
+onnxruntime>=1.16.0
+flask>=3.0.0
+flask-cors>=4.0.0
+python-dotenv>=1.0.0

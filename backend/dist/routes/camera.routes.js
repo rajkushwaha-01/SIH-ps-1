@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const camera_controller_1 = require("../controllers/camera.controller");
+const detection_controller_1 = require("../controllers/detection.controller");
+const router = (0, express_1.Router)();
+router.get("/", (req, res, next) => camera_controller_1.cameraController.getAllCameras(req, res, next));
+router.get("/:cameraId", (req, res, next) => camera_controller_1.cameraController.getCameraById(req, res, next));
+router.get("/:cameraId/detections", (req, res, next) => detection_controller_1.detectionController.getCameraDetections(req, res, next));
+router.post("/:cameraId/process", (req, res, next) => detection_controller_1.detectionController.processCameraVideo(req, res, next));
+router.post("/", (req, res, next) => camera_controller_1.cameraController.createCamera(req, res, next));
+router.put("/:cameraId", (req, res, next) => camera_controller_1.cameraController.updateCamera(req, res, next));
+router.delete("/:cameraId", (req, res, next) => camera_controller_1.cameraController.deleteCamera(req, res, next));
+router.post("/seed/demo", (req, res, next) => camera_controller_1.cameraController.seedCameras(req, res, next));
+router.post("/simulation/run-all", (req, res, next) => camera_controller_1.cameraController.runSimulation(req, res, next));
+exports.default = router;
